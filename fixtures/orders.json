@@ -1,0 +1,10 @@
+{
+  "orders": [
+    { "id": "O-501", "contactId": "C-101", "email": "ada@northstar.example", "status": "Pending", "revision": 1 },
+    { "id": "O-502", "contactId": "C-102", "email": "ada@harbor.example", "status": "Pending", "revision": 1 },
+    { "id": "O-503", "contactId": "C-103", "email": "luis@acme.example", "status": "Pending", "revision": 1 }
+  ],
+  "events": [
+    { "id": "EV-703", "orderId": "O-503", "type": "shipment_confirmed", "tracking": "TRK-9001" }
+  ]
+}
