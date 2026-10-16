@@ -5,3 +5,5 @@ artifacts/
 .DS_Store
 
 .data-repair-lock.sqlite*
+
+.data-repair-workspace.json
