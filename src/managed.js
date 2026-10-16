@@ -75,3 +75,45 @@ export function initializeManaged(root, options = {}) {
   );
   return { root, instance_id: journal.instance_id, journal };
 }
+
+export async function main(args = process.argv.slice(2)) {
+  const { parseArgs } = await import("node:util");
+  try {
+    const { values, positionals } = parseArgs({
+      args,
+      allowPositionals: true,
+      options: { help: { type: "boolean" } },
+    });
+    if (values.help) {
+      console.log(
+        "data-workspace-init ROOT (exclusive synthetic managed starter; no model key required)",
+      );
+      return;
+    }
+    if (positionals.length !== 1) throw Error("provide exactly one fresh ROOT");
+    const result = initializeManaged(positionals[0]);
+    console.log(
+      JSON.stringify(
+        {
+          ok: true,
+          root: result.root,
+          instance_id: result.instance_id,
+          scope:
+            "explicit synthetic starter authorship; rich case provenance/inspect/reset CLI is active development",
+        },
+        null,
+        2,
+      ),
+    );
+  } catch (e) {
+    console.log(JSON.stringify({ ok: false, error: e.message }));
+    process.exitCode = 1;
+  }
+}
+const { fileURLToPath } = await import("node:url");
+if (
+  process.argv[1] &&
+  fs.existsSync(process.argv[1]) &&
+  fs.realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)
+)
+  await main();

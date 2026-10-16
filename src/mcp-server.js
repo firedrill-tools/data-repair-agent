@@ -11,14 +11,29 @@ const option = (name) => {
 };
 const root = option("--workspace");
 if (!root) throw new Error("--workspace required");
-const dataset = new Dataset(path.resolve(root));
+const operatorWorker = process.argv.includes("--operator-worker");
+const credential = operatorWorker
+  ? process.env.DATA_REPAIR_OPERATION_CREDENTIAL
+  : null;
+if (operatorWorker && !credential)
+  throw new Error("private worker credential required");
+const dataset = new Dataset(path.resolve(root), { credential });
+const operation = operatorWorker ? dataset.operation(dataset.snapshot()) : null;
+if (
+  operatorWorker &&
+  (!operation || operation.id !== process.env.DATA_REPAIR_OPERATION_ID)
+)
+  throw new Error("worker scope differs");
 const allowWrites = process.argv.includes("--allow-writes");
+if (operation && operation.allow_writes !== allowWrites)
+  throw new Error("worker write permission differs");
 const result = (value) => ({
   content: [{ type: "text", text: JSON.stringify(value) }],
   isError: Boolean(value?.error),
 });
 const safe = (handler) => async (args) => {
   try {
+    if (operatorWorker) dataset.operation(dataset.snapshot());
     return result(await handler(args));
   } catch (error) {
     return result({
