@@ -9,7 +9,11 @@
   "scripts": {
     "repair": "node src/agent.js",
     "test": "node --test tests/*.test.js",
-    "init": "node src/managed.js"
+    "init": "node src/managed.js",
+    "workspace": "node src/workspace.js",
+    "datasets:check": "node scripts/build-datasets.mjs --check",
+    "package:source": "node scripts/package.mjs",
+    "package:check": "node scripts/check-package.mjs"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "0.3.300",

@@ -6,6 +6,7 @@ import { createServer } from "node:http";
 import { once } from "node:events";
 import { initializeManaged } from "../src/managed.js";
 import { Dataset } from "../src/dataset.js";
+import { initialize as initializeCase } from "../src/datasets.js";
 export const intent = {
   kind: "contact_email",
   id: "C-101",
@@ -31,15 +32,23 @@ export const actions = [
 ];
 export async function environment(
   t,
-  { sequence = actions, mutate = (frames) => frames } = {},
+  { sequence = actions, mutate = (frames) => frames, caseId } = {},
 ) {
   const directory = fs.mkdtempSync(
       path.join(os.tmpdir(), "data-owned-runtime-"),
     ),
     workspace = path.join(directory, "workspace");
-  initializeManaged(workspace);
-  const dataset = new Dataset(workspace),
-    requests = [];
+  const initialized = caseId
+    ? initializeCase(workspace, caseId)
+    : initializeManaged(workspace);
+  let dataset;
+  try {
+    dataset = new Dataset(workspace);
+  } catch (e) {
+    if (initialized.application_valid !== false) throw e;
+    dataset = null;
+  }
+  const requests = [];
   const provider = createServer(async (req, res) => {
     try {
       let raw = "";

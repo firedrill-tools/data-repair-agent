@@ -7,3 +7,8 @@ artifacts/
 .data-repair-lock.sqlite*
 
 .data-repair-workspace.json
+
+.data-repair-source.json
+
+dist/
+workspaces/

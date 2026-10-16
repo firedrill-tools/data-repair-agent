@@ -28,6 +28,7 @@ export function initializeManaged(root, options = {}) {
     "orders.json",
     JOURNAL,
     ".data-repair-lock.sqlite",
+    ".data-repair-source.json",
   ]) {
     try {
       fs.lstatSync(path.join(root, file));
@@ -49,30 +50,60 @@ export function initializeManaged(root, options = {}) {
     json =
       options.ordersText ??
       readRegular(new URL("../fixtures/orders.json", import.meta.url)).text;
+  if (
+    Buffer.byteLength(csv) > 8 * 1024 * 1024 ||
+    Buffer.byteLength(json) > 8 * 1024 * 1024
+  )
+    throw Error("authored source exceeds original byte limit");
   parseBusiness(csv, json);
-  const journal = validateJournal({
-    synthetic: true,
-    version: 1,
-    instance_id: randomUUID(),
-    provenance: {
-      kind: "explicit_synthetic_source_author",
-      seed_contacts_sha256: hash(Buffer.from(csv)),
-      seed_orders_sha256: hash(Buffer.from(json)),
-      prior_model_evidence: null,
-      prior_human_authentication: null,
-      prior_external_delivery: null,
-    },
-    operations: [],
-    reads: [],
-    decisions: [],
-  });
+  if (options.journalTemplate) {
+    const imported = validateJournal(options.journalTemplate);
+    if (
+      imported.operations.length ||
+      imported.reads.some(
+        (r) => r.instance_id !== null || r.scope.kind !== "synthetic_human",
+      ) ||
+      imported.decisions.some(
+        (d) =>
+          d.instance_id !== null ||
+          d.scope.kind !== "synthetic_human" ||
+          d.status === "prepared",
+      )
+    )
+      throw Error(
+        "imported template cannot claim runtime or unresolved repair authority",
+      );
+  }
+  const journal = validateJournal(
+    options.journalTemplate
+      ? {
+          ...structuredClone(options.journalTemplate),
+          instance_id: randomUUID(),
+        }
+      : {
+          synthetic: true,
+          version: 1,
+          instance_id: randomUUID(),
+          provenance: {
+            kind: "explicit_synthetic_source_author",
+            seed_contacts_sha256: hash(Buffer.from(csv)),
+            seed_orders_sha256: hash(Buffer.from(json)),
+            prior_model_evidence: null,
+            prior_human_authentication: null,
+            prior_external_delivery: null,
+          },
+          operations: [],
+          reads: [],
+          decisions: [],
+        },
+  );
+  const journalRaw = Buffer.from(JSON.stringify(journal, null, 2) + "\n");
+  if (journalRaw.length > 8 * 1024 * 1024)
+    throw Error("authored journal exceeds original byte limit");
   fs.mkdirSync(root, { recursive: true, mode: 0o700 });
   exclusive(path.join(root, "contacts.csv"), Buffer.from(csv));
   exclusive(path.join(root, "orders.json"), Buffer.from(json));
-  exclusive(
-    path.join(root, JOURNAL),
-    Buffer.from(JSON.stringify(journal, null, 2) + "\n"),
-  );
+  exclusive(path.join(root, JOURNAL), journalRaw);
   return { root, instance_id: journal.instance_id, journal };
 }
 
@@ -82,24 +113,26 @@ export async function main(args = process.argv.slice(2)) {
     const { values, positionals } = parseArgs({
       args,
       allowPositionals: true,
-      options: { help: { type: "boolean" } },
+      options: { help: { type: "boolean" }, case: { type: "string" } },
     });
     if (values.help) {
       console.log(
-        "data-workspace-init ROOT (exclusive synthetic managed starter; no model key required)",
+        "data-workspace-init ROOT [--case CASE] (exclusive private case; no model key required)",
       );
       return;
     }
     if (positionals.length !== 1) throw Error("provide exactly one fresh ROOT");
-    const result = initializeManaged(positionals[0]);
+    const { initialize } = await import("./datasets.js");
+    const result = initialize(positionals[0], values.case);
     console.log(
       JSON.stringify(
         {
           ok: true,
           root: result.root,
           instance_id: result.instance_id,
-          scope:
-            "explicit synthetic starter authorship; rich case provenance/inspect/reset CLI is active development",
+          case_id: result.case_id,
+          application_valid: result.application_valid,
+          original_seed_match: result.original_seed_match,
         },
         null,
         2,

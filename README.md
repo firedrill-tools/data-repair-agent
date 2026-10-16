@@ -8,7 +8,8 @@ Requires Node22.13+ and npm. The actual runtime uses Claude Agent SDK0.3.300, MC
 
 ```sh
 npm ci
-npm run init -- workspace
+npm run workspace -- list
+npm run init -- workspace --case corrected-contact
 ```
 
 Set `ANTHROPIC_API_KEY` and an explicitly enabled `CLAUDE_MODEL`. No model is selected or upgraded automatically. Inspect without writes:
@@ -39,7 +40,7 @@ Managed initialization explicitly creates fresh UUID/private CSV/JSON plus `.dat
 
 Email repair needs genuine reads of both the exact contact and chosen order; status repair needs the full order/events. Current complete file bytes/inodes, identity/evidence, instance, exact caller value/evidence target and separate write permission must still match. Model task/record prose cannot broaden those grants. Wrong/read-only/closed operations, missing/borrowed/consumed reads, changed source/revision, contradictory order emails/shipment evidence, unsafe/coerced arguments and revision exhaustion fail without overwriting business data.
 
-A persistent private SQLite lock serializes cooperating processes. Each changed repair writes a durable prepared decision, replaces one flushed staged business file after original-byte/inode checks, then finalizes the journal. These are separate filesystem commits, not a multi-file/database transaction. Unrelated rows remain semantically unchanged; the other file remains byte-for-byte unchanged. A journal failure after a real file change preserves actual source and prepared evidence, blocks further repair/observation/registration, and does not invent success. Inspect privately and use a fresh explicitly initialized/reset destination; there is no automatic repair in place. Corrupt final source stays corrupt and unknown. Existing files/mutex/evidence are preserved. Rich pinned-case inspection/reset CLI remains active development.
+A persistent private SQLite lock serializes cooperating processes. Each changed repair writes a durable prepared decision, replaces one flushed staged business file after original-byte/inode checks, then finalizes the journal. These are separate filesystem commits, not a multi-file/database transaction. Unrelated rows remain semantically unchanged; the other file remains byte-for-byte unchanged. A journal failure after a real file change preserves actual source and prepared evidence, blocks further repair/observation/registration, and does not invent success. Inspect privately and use a fresh explicitly initialized/reset destination; there is no automatic repair in place. Corrupt final source stays corrupt and unknown. Existing files/mutex/evidence are preserved. Pinned-case inspection/reset commands below preserve original source and distinguish an authored malformed image from unrecognized corruption.
 
 Direct unbound Dataset calls and a manually launched tool server are declared synthetic human/source-test seams. The normal model runtime uses a fresh private scoped worker; it cannot switch to that human authority. Files and working directories are not an OS sandbox against uncooperative local writers.
 
@@ -55,10 +56,28 @@ Every run prepares private0700/0600 `trace.json` evidence before key/resource ch
 
 Cancellation/deadline/SIGINT/SIGTERM/SIGHUP closes durable write authority before draining actual SDK calls, queued stdio work, bridge, child processes and owned HTTP. An actual queued repair released after operation closure cannot commit. Partial startup and failed close are owned, with one close attempt and honest flags. Earlier file effects survive later native/source/recording/cleanup failure; unknown final source or evidence durability stays unknown.
 
-## Development evidence and next tasks
+## Private cases, inspection and reset
 
-`npm test` currently passes74source/native/actual bundled-SDK/public-hook/real-stdio/process/CLI cases locally. They cover current original facts, two six-process races, durable authority and partial journal failure, ordinary exact repair/reread, original unfinished native responses, read-only/wrong intent, competing actor, unknown/corrupt final source, receipt failure after commit, missing keys/partial startup/failed close, actual concurrent runtimes, verbatim mentions, deadline/parent cancellation, queued stdio fencing and all three normal CLI signals. Tests use synthetic keys and owned loopback HTTP, with no paid model or real customer.
+Twelve original hash-bound cases span starter, busy, ambiguous and boundary profiles. The busy book has48contacts/60orders/46shipment events/28reads/12prior repairs/8pending reads and12ordered imported history entries. These are actual Dataset-authored fictional changes with deterministic imported UUIDs; prior model evidence, authentication and external delivery stay unknown.
 
-[PLAN.md](PLAN.md) and [COMPATIBILITY.md](COMPATIBILITY.md) record exact checkpoints, genuine baseline defects and supported limits. Rich12case/four-profile imports, private case CLI/reset and fresh complete/production-only source distribution are next; this project is not independently complete yet. Live enabled model/key/budget/semantic+billing review, a qualified new Firedrill interface with persisted scenarios/runs, real data services and publication/license stay parked. No license is assigned for publication.
+```sh
+npm run workspace -- list
+npm run workspace -- init another-workspace --case shipment-status
+npm run workspace -- inspect workspace
+npm run workspace -- reset workspace fresh-workspace
+npm run datasets:check
+```
+
+Initialization/reset are exclusive private file operations with a new runtime UUID and pinned original seed authority. They preserve old files/mutex/evidence, refuse existing names or missing/corrupt/foreign/stripped authority, and distinguish valid current edits from the original imported seed. Imported null-instance pending reads require fresh actual worker observations. The files are separate exclusive creations; partial initialization stays visible and needs a fresh destination.
+
+Two cases deliberately append malformed CSV or JSON to an otherwise coherent source reference. Their exact original bytes are pinned. The private CLI reports `application_valid: false` and `state: null`; it can inspect/reset the known original image without pretending the normal application accepted it. Unrecognized corrupt current source refuses reset. Normal validation is unconditional and rejects these inputs before SDK/MCP/native requests. There is no case-name branch in runtime repair logic or normalization of invalid data. Case/reference/seed/controller files stay outside model tools and scratch context.
+
+## Verification
+
+`npm test` qualifies92source/native/actual bundled-SDK/public-hook/real-stdio/process/CLI/dataset checks. Ten population cases exercise actual SDK/MCP paths; two are explicit preflight rejections with zero model requests. These are12distinct situations, not12live model trials or a larger campaign. Provider keys and HTTP are synthetic/owned loopback; no paid model or real customer is used.
+
+`npm run package:check` builds and extracts a complete locked source outside checkout, runs all92checks and deterministic authoring, independently installs production-only dependencies, and runs all12installed private case init/inspect/reset commands. It also verifies normal installed symlink CLI/actual SDK/native SSE/real scoped worker/exact repair, missing-key prepared evidence, all SIGINT/SIGTERM/SIGHUP pending native drains, and an actual saved repair followed by a final native failure. Delivered hashes/sizes/modes must remain unchanged and the portable stored-DEFLATE USTAR/gzip source bytes must repeat after installs/tests.
+
+[PLAN.md](PLAN.md) and [COMPATIBILITY.md](COMPATIBILITY.md) record genuine baseline defects, exact checkpoints and limits. The portfolio catalog/ledger records the immutable green Linux run and downloaded original archive equality before independent completion. Live enabled model/key/budget/semantic+billing review, a qualified new Firedrill interface with persisted scenarios/runs, real data services and publication/license stay parked. No license is assigned for publication.
 
 [Firedrill example catalog](https://github.com/firedrill-tools/firedrill-example-catalog).

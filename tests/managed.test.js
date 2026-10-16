@@ -274,13 +274,25 @@ test("missing or replaced managed instance refuses continued authority without r
   fs.writeFileSync(e.file, JSON.stringify(j));
   assert.throws(() => new Dataset(e.root), /instance/);
 });
-test("malformed authored input fails before creating any managed destination file", (t) => {
+test("malformed or oversized authored input fails before creating any managed destination file", (t) => {
   const parent = fs.mkdtempSync(
     path.join(os.tmpdir(), "data-managed-invalid-"),
   );
   t.after(() => fs.rmSync(parent, { recursive: true, force: true }));
   const root = path.join(parent, "bad");
   assert.throws(() => initializeManaged(root, { ordersText: '{"broken":' }));
+  assert.equal(fs.existsSync(root), false);
+  const valid = fs.readFileSync(
+    new URL("../fixtures/orders.json", import.meta.url),
+    "utf8",
+  );
+  assert.throws(
+    () =>
+      initializeManaged(root, {
+        ordersText: " ".repeat(8 * 1024 * 1024) + valid,
+      }),
+    /byte limit/,
+  );
   assert.equal(fs.existsSync(root), false);
 });
 test("managed order repair uses original full order/events and preserves exact contact file bytes", (t) => {

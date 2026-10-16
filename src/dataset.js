@@ -7,6 +7,7 @@ import { emailRepair, statusRepair, canonical, same, hash } from "./schema.js";
 import { readRegular, writeStaged } from "./source.js";
 import { columns, parseBusiness, repairPlan } from "./business.js";
 import { JOURNAL } from "./managed.js";
+import { authority } from "./datasets.js";
 import {
   validateJournal,
   intentSchema,
@@ -52,6 +53,7 @@ export class Dataset {
     } catch (e) {
       if (e.code !== "ENOENT") throw e;
     }
+    authority(this.root, journal);
     if (
       Object.hasOwn(this, "instance") &&
       this.instance !== (journal?.instance_id ?? null)

@@ -1,5 +1,6 @@
 /** Strict durable fictional observations and one-file prepared repair decisions. */
 import { z } from "zod";
+import { DATASET_SHA256 } from "./_dataset-manifest.js";
 import {
   identifier,
   line,
@@ -74,6 +75,15 @@ const journalSchema = z.strictObject({
   synthetic: z.literal(true),
   version: z.literal(1),
   instance_id: uuid,
+  dataset: z
+    .strictObject({
+      id: z.literal("repair-populations"),
+      version: z.literal("1.0.0"),
+      case_id: identifier,
+      source_sha256: z.literal(DATASET_SHA256),
+      seed_state_sha256: digest,
+    })
+    .optional(),
   provenance: z.strictObject({
     kind: z.literal("explicit_synthetic_source_author"),
     seed_contacts_sha256: digest,
