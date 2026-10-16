@@ -35,3 +35,9 @@ Explore related applications in the [Firedrill example catalog](https://github.c
 ## Development audit active
 
 All4 original checks pass, but actual source probes reproduce same-revision identity drift, empty CSV revision coercion, MAX revision overflow, malformed unrelated order/event acceptance, duplicate JSON normalization and repeated no-op revision increments. [PLAN.md](PLAN.md) tracks complete original CSV/JSON/evidence/read/intent authority, native Claude completion before actual MCP repairs, owned lifecycle/private evidence, rich12case imports/private CLI and fresh locked distributions. The baseline native path is not yet qualified by the offline MCP tests. No paid model or real data action was used; live provider/new Firedrill/real services/publication gates stay parked.
+
+### First source checkpoint
+
+The26 source/real stdio/process checks now reject duplicate JSON, malformed related data, noncanonical revisions and overflow. Both original file hashes/inodes must still match genuine prior record/evidence reads; same-revision drift rejects. Already-correct shipment status preserves exact files/revision. Persistent SQLite serialization and flushed exclusive staging qualify one changed file while preserving the other. Read both the exact contact and evidence order before an email repair, or the full order/events before status repair. See PLAN.md for evidence and precise limits.
+
+Managed durable read/instance/decision history, exact caller repair intent, actual native Claude completion before MCP dispatch and lifecycle/evidence ownership remain active development. Current reads are in-memory, generic MCP write permission is still broader than the intended exact repair scope, and the old runtime has not been qualified. This checkpoint does not complete the project.

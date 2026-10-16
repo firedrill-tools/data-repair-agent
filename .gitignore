@@ -3,3 +3,5 @@ workspace/
 artifacts/
 .env
 .DS_Store
+
+.data-repair-lock.sqlite*
