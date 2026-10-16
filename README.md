@@ -31,3 +31,7 @@ The data tools validate both input files before a write. A malformed CSV or JSON
 Reset by copying the fixtures into a fresh workspace. `npm test` covers ambiguity, malformed files, stale revisions, wrong evidence, read-only MCP rejection, and preserving unrelated records. These are offline tool and state checks, not a live Claude run. Live provider and new Firedrill integration proofs remain pending. This private repository has no license pending portfolio publication decisions.
 
 Explore related applications in the [Firedrill example catalog](https://github.com/firedrill-tools/firedrill-example-catalog). Product and setup references: [Firedrill](https://firedrill.run/) and the [official developer documentation](https://docs.firedrill.run/). Use documentation matching the qualified release; this repository records its current integration limits above.
+
+## Development audit active
+
+All4 original checks pass, but actual source probes reproduce same-revision identity drift, empty CSV revision coercion, MAX revision overflow, malformed unrelated order/event acceptance, duplicate JSON normalization and repeated no-op revision increments. [PLAN.md](PLAN.md) tracks complete original CSV/JSON/evidence/read/intent authority, native Claude completion before actual MCP repairs, owned lifecycle/private evidence, rich12case imports/private CLI and fresh locked distributions. The baseline native path is not yet qualified by the offline MCP tests. No paid model or real data action was used; live provider/new Firedrill/real services/publication gates stay parked.
