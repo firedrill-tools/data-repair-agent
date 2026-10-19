@@ -81,3 +81,7 @@ Two cases deliberately append malformed CSV or JSON to an otherwise coherent sou
 [PLAN.md](PLAN.md) and [COMPATIBILITY.md](COMPATIBILITY.md) record genuine baseline defects, exact checkpoints and limits. The portfolio catalog/ledger records the immutable green Linux run and downloaded original archive equality before independent completion. Live enabled model/key/budget/semantic+billing review, a qualified new Firedrill interface with persisted scenarios/runs, real data services and publication/license stay parked. No license is assigned for publication.
 
 [Firedrill example catalog](https://github.com/firedrill-tools/firedrill-example-catalog).
+
+## Current Firedrill integration
+
+Released CLI/SDK 2.2.2, current command invocation, remote operator MCP and recovery are documented in [firedrill/README.md](firedrill/README.md). Offline checks preserve actual managed-source/native key behavior and independent caller intent. Authenticated persisted runs and live quality/cost remain separate parked gates.

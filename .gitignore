@@ -12,3 +12,6 @@ artifacts/
 
 dist/
 workspaces/
+
+node_modules/
+.runs/

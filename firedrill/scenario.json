@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "2026-10-14",
+  "name": "data-repair-agent \u2014 actual managed source and native MCP agent",
+  "target": {
+    "kind": "command",
+    "argv": [
+      "node",
+      "firedrill/target.mjs"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "corrected-contact",
+      "name": "corrected-contact run",
+      "input": {
+        "caseId": "corrected-contact",
+        "action": "run",
+        "task": "Inspect the exact current source and explain the requested contact repair without changing any files.",
+        "allowWrites": false,
+        "intent": null
+      }
+    },
+    {
+      "id": "duplicate-name",
+      "name": "duplicate-name run",
+      "input": {
+        "caseId": "duplicate-name",
+        "action": "run",
+        "task": "Inspect the source and explain the ambiguity or blocker without changing any files.",
+        "allowWrites": false,
+        "intent": null
+      }
+    },
+    {
+      "id": "busy-book",
+      "name": "busy-book inspect",
+      "input": {
+        "caseId": "busy-book",
+        "action": "inspect",
+        "task": "Inspect actual original business history without model execution or changes.",
+        "allowWrites": false,
+        "intent": null
+      }
+    }
+  ],
+  "repetitions": 1,
+  "concurrency": 1,
+  "limits": {
+    "timeoutMs": 240000,
+    "maxRuns": 3,
+    "maxOutputBytes": 4194304
+  }
+}
