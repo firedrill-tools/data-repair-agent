@@ -13,6 +13,7 @@ try {
   if (bytes.length > 64 * 1024 * 1024) throw new Error('Private inspection exceeds its 64 MiB retained-file bound.');
   const path = join(dirname(workspace), action === 'init' ? 'initial-inspection.json' : 'inspection.json');
   await writeFile(path, bytes, { flag: 'wx', mode: 0o600, flush: true });
+  controller.signal.throwIfAborted();
   const keys = ['ok', 'root', 'instance_id', 'case_id', 'application_valid', 'application_error', 'original_seed_match', 'source_hashes', 'history_scope',
     'instanceId', 'caseId', 'originalSeedMatch', 'applicationValid', 'applicationError', 'runtimeReady', 'datasetSha256', 'definitionSha256', 'seedScope'];
   const summary = Object.fromEntries(keys.filter(key => Object.hasOwn(result, key)).map(key => [key, result[key]]));
