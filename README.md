@@ -4,6 +4,8 @@ A Claude Agent SDK application repairs fictional CSV contact emails and JSON shi
 
 Simulate this Claude Agent SDK AI agent with [Firedrill](https://firedrill.run/), a simulation platform for AI agents. Start with the [Firedrill setup and simulation guide](firedrill/README.md); your coding agent can operate it while this application's runner stays in your repository or CI.
 
+This example repository is publicly viewable. A project license has not been selected.
+
 ## Run locally
 
 Requires Node22.13+ and npm. The actual runtime uses Claude Agent SDK0.3.300, MCP client/server2.3.1 and owned Undici7.30.1 HTTP.
@@ -80,7 +82,7 @@ Two cases deliberately append malformed CSV or JSON to an otherwise coherent sou
 
 `npm run package:check` builds and extracts a complete locked source outside checkout, runs all92checks and deterministic authoring, independently installs production-only dependencies, and runs all12installed private case init/inspect/reset commands. It also verifies normal installed symlink CLI/actual SDK/native SSE/real scoped worker/exact repair, missing-key prepared evidence, all SIGINT/SIGTERM/SIGHUP pending native drains, and an actual saved repair followed by a final native failure. Delivered hashes/sizes/modes must remain unchanged and the portable stored-DEFLATE USTAR/gzip source bytes must repeat after installs/tests.
 
-[PLAN.md](PLAN.md) and [COMPATIBILITY.md](COMPATIBILITY.md) record genuine baseline defects, exact checkpoints and limits. The portfolio catalog/ledger records the immutable green Linux run and downloaded original archive equality before independent completion. Live enabled model/key/budget/semantic+billing review, authenticated Firedrill scenario/run persistence verification, real data services and publication/license stay parked. No license is assigned for publication.
+[PLAN.md](PLAN.md) and [COMPATIBILITY.md](COMPATIBILITY.md) record genuine baseline defects, exact checkpoints and limits. The portfolio catalog/ledger records the immutable green Linux run and downloaded original archive equality before independent completion. Live enabled model/key/budget/semantic+billing review, authenticated Firedrill scenario/run persistence verification, real data services and license stay parked. No license is assigned for publication.
 
 [Firedrill example catalog](https://github.com/firedrill-tools/firedrill-example-catalog).
 
